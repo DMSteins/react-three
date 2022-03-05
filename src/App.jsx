@@ -17,14 +17,31 @@ function App() {
     let attribute = new THREE.BufferAttribute(vertices, 3)
     geometry.attributes.position = attribute
 
+    // 面渲染
     let material = new THREE.MeshBasicMaterial({
       color: 0x0000ff,
       side: THREE.DoubleSide
     })
     let mesh = new THREE.Mesh(geometry, material)
-
     let scene = new THREE.Scene()
-    scene.add(mesh)
+    // scene.add(mesh)
+
+    // 点渲染
+    let pointMater = new THREE.PointsMaterial({
+      color: 0xff0000,
+      size: 10
+    })
+    let points = new THREE.Points(geometry, pointMater)
+    // scene.add(points)
+
+    // 线渲染
+    let lineMater = new THREE.LineBasicMaterial({
+      color: 0xff0000
+    })
+    let lines = new THREE.Line(geometry, lineMater)
+    scene.add(lines)
+
+
 
     let point = new THREE.PointLight(0xff0000)
     point.position.set(0, 150, 0)
@@ -42,11 +59,11 @@ function App() {
       color: 0xffffff,
       // opacity: 0.75,
       // transparent: true
-      specular:0x4488ee,
-      shininess:12
+      // specular:0x4488ee,
+      // shininess:12
     }); //材质对象Material
     var mesh1 = new THREE.Mesh(cube, mater); //网格模型对象Mesh
-    scene.add(mesh1); //网格模型添加到场景中
+    // scene.add(mesh1); //网格模型添加到场景中
 
     let w = window.innerWidth
     let h = window.innerHeight
@@ -72,7 +89,7 @@ function App() {
       renderer.render(scene, camera)
       mesh1.rotateY(0.001 * t)
 
-      requestAnimationFrame(draw)
+      // requestAnimationFrame(draw)
     }
     requestAnimationFrame(draw)
   }, []);
