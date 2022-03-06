@@ -26,17 +26,30 @@ function App() {
     let scene = new THREE.Scene()
     // scene.add(mesh)
 
+    // 顶点颜色
+    let vertexColors = new Float32Array([
+      0,1,0,
+      1,0,0,
+      0,0,1,
+      1,1,0,
+      0.5,1,0,
+      0.3,0.1,0.6
+    ])
+    geometry.attributes.color = new THREE.BufferAttribute(vertexColors, 3)
     // 点渲染
     let pointMater = new THREE.PointsMaterial({
-      color: 0xff0000,
+      // color: 0xff0000,
+      vertexColors: THREE.VertexColors,
       size: 10
     })
+    
     let points = new THREE.Points(geometry, pointMater)
     // scene.add(points)
 
     // 线渲染
     let lineMater = new THREE.LineBasicMaterial({
-      color: 0xff0000
+      vertexColors: THREE.VertexColors,
+      // color: 0xff0000
     })
     let lines = new THREE.Line(geometry, lineMater)
     scene.add(lines)
