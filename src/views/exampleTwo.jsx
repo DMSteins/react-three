@@ -12,12 +12,12 @@ function ExampleTwo() {
         //类型数组创建顶点位置position数据
         var vertices = new Float32Array([
             0, 0, 0, //顶点1坐标
-            0, 100, 0, //顶点2坐标
-            100, 0, 0, //顶点3坐标
+            100, 0, 0, //顶点2坐标
+            0, 100, 0, //顶点3坐标
 
-            // 0, 0, 0, //顶点4坐标   和顶点1位置相同
+            0, 0, 0, //顶点4坐标   和顶点1位置相同
             0, 0, 100, //顶点5坐标  和顶点3位置相同
-            // 100, 0, 0, //顶点6坐标
+            100, 0, 0, //顶点6坐标
         ]);
         // 创建属性缓冲区对象
         var attribue = new THREE.BufferAttribute(vertices, 3); //3个为一组
@@ -39,22 +39,24 @@ function ExampleTwo() {
             0,2,3
         ])
         // 顶点索引复用
-        geometry.index = new THREE.BufferAttribute(indexVector, 1)
-        var normals = new Float32Array([
-            0, 1, 0, //顶点1法向量
-            0, 1, 0, //顶点2法向量
-            0, 1, 0, //顶点3法向量
+        // geometry.index = new THREE.BufferAttribute(indexVector, 1)
 
-            0, 0, 1, //顶点4法向量
-            0, 0, 1, //顶点5法向量
-            0, 0, 1, //顶点6法向量
+
+        var normals = new Float32Array([
+            0, 0, 1, //顶点1法向量
+            0, 0, 1, //顶点2法向量
+            0, 0, 1, //顶点3法向量
+
+            0, 1, 0, //顶点4法向量
+            0, 1, 0, //顶点5法向量
+            0, 1, 0, //顶点6法向量
         ]);
         // 设置几何体attributes属性的位置normal属性
         geometry.attributes.normal = new THREE.BufferAttribute(normals, 3); //3个为一组,表示一个顶点的xyz坐标
         
         // THREE.MeshBasicMaterial是一种非常简单的材质，这种材质不考虑场景中光照的影响
         let material = new THREE.MeshLambertMaterial({
-            color: "#ffff00",
+            color: "#00ff00",
             side: THREE.DoubleSide,
             // color: THREE.VertexColors,
             // size: 10
@@ -64,23 +66,26 @@ function ExampleTwo() {
         let scene = new THREE.Scene();
         scene.add(mesh);
         let origin = new THREE.Vector3(0,0,0);
-        let camera = new THREE.OrthographicCamera(-100, 100, 100, -100 ,1,1000)
+        let camera = new THREE.OrthographicCamera(-200, 200, 200, -200 ,1,1000)
         camera.position.set(300, 300, 300)
         camera.lookAt(scene.position)
 
-        let light = new THREE.AmbientLight(0xffffff)
+        //漫反射数学模型RGB分量表示：(R2,G2,B2) = (R1,G1,B1) x (R0,G0,B0) x cosθ
+        let light = new THREE.AmbientLight(0xff33ff)
         // light.position.set(0,300,0)
         // scene.add(light)
 
         let pointLight = new THREE.PointLight({
-            color: "#fff000",
+            color: "#ffffff",
         })
-        pointLight.position.set(200, 100, 50)
+        pointLight.position.set(200, 200, 100)
         scene.add(pointLight)
 
         let cube = new THREE.BoxGeometry(10, 10, 10)
         let cubeMat = new THREE.MeshLambertMaterial({
-            color: "#ffffff"
+            color: "#ffffff",
+            // 显示线框
+            // wireframe: true 
         })
         let cubeMesh = new THREE.Mesh(cube, cubeMat)
         cubeMesh.position.set(5, 5, 5)
