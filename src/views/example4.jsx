@@ -45,7 +45,7 @@ function Example4() {
         mesh1.name = "Box"; //网格模型1命名
         mesh2.name = "Sphere"; //网格模型2命名
         group.add(mesh1); //网格模型添加到组中
-        group.add(mesh2); //网格模型添加到组中
+        // group.add(mesh2); //网格模型添加到组中
 
         
         /**
@@ -55,19 +55,53 @@ function Example4() {
         var times = [0, 10]; //关键帧时间数组，离散的时间点序列
         var values = [0, 0, 0, 150, 0, 0]; //与时间点对应的值组成的数组
         // 创建位置关键帧对象：0时刻对应位置0, 0, 0   10时刻对应位置150, 0, 0
-        var posTrack = new THREE.KeyframeTrack('Box.position', times, values);
+        // var posTrack = new THREE.KeyframeTrack('Box.position', times, values);
         // 创建颜色关键帧对象：10时刻对应颜色1, 0, 0   20时刻对应颜色0, 0, 1
-        var colorKF = new THREE.KeyframeTrack('Box.material.color', [10, 20], [1, 0, 0, 0, 0, 1]);
+        // var colorKF = new THREE.KeyframeTrack('Box.material.color', [0, 10], [1, 0, 0, 0, 0, 1]);
         // 创建名为Sphere对象的关键帧数据  从0~20时间段，尺寸scale缩放3倍
-        var scaleTrack = new THREE.KeyframeTrack('Sphere.scale', [0, 20], [1, 1, 1, 3, 3, 3]);
+        // var scaleTrack = new THREE.KeyframeTrack('Sphere.scale', [0, 20], [1, 1, 1, 3, 3, 3]);
+        var rotateTrack = new THREE.KeyframeTrack('Box.rotation[z]', [0, 10], [0, Math.PI / 2]);
 
         // duration决定了默认的播放时间，一般取所有帧动画的最大时间
         // duration偏小，帧动画数据无法播放完，偏大，播放完帧动画会继续空播放
         var duration = 20;
         // 多个帧动画作为元素创建一个剪辑clip对象，命名"default"，持续时间20
-        var clip = new THREE.AnimationClip("default", duration, [posTrack, colorKF, scaleTrack]);
+        var clip = new THREE.AnimationClip("default", duration, [rotateTrack]);
 
+        let planeVertices = new Float32Array([
+            0,0,0,
+            0,0,100,
+            100,0,100,
+            100,0,100,
+            100,0,0,
+            0,0,0
+        ])
+        let planeGeo = new THREE.BufferGeometry()
+        planeGeo.attributes.position = new THREE.BufferAttribute(planeVertices, 3)
+        planeGeo.attributes.normal = new THREE.BufferAttribute(new Float32Array([
+            0,1,0,
+            0,1,0,
+            0,1,0,
+            0,1,0,
+            0,1,0,
+            0,1,0,
+        ]), 3)
+        let planeMater = new THREE.MeshLambertMaterial({
+            color: 0x6600ff,
+            side: THREE.DoubleSide
+        })
+        let planeMesh = new THREE.Mesh(planeGeo, planeMater)
+        
+        planeMesh.name = "Plane"
+        let rotateKF = new THREE.KeyframeTrack('Plane.rotation[z]', [0, 20], [0, Math.PI * 2])
+        let planeClip = new THREE.AnimationClip("planeClip", 20, [rotateKF])
+        let planeMixer = new THREE.AnimationMixer(planeMesh)
+        
+        let action = planeMixer.clipAction(planeClip)
+        action.timeScale = 20
+        action.play()
 
+        scene.add(planeMesh)
         /**
          * 播放编辑好的关键帧数据
          */
@@ -81,7 +115,7 @@ function Example4() {
         AnimationAction.play();//开始播放
 
 
-        scene.add(group)
+        // scene.add(group)
 
         // 创建一个时钟对象Clock
         var clock = new THREE.Clock();
@@ -92,7 +126,9 @@ function Example4() {
 
             //clock.getDelta()方法获得两帧的时间间隔
             // 更新混合器相关的时间
-            mixer.update(clock.getDelta());
+            // mixer.update(clock.getDelta());
+
+            planeMixer.update(clock.getDelta());
         }
         render();
 
