@@ -6,5 +6,6 @@ three.js demo项目
 
 ```
 $ yarn
+
 $ yarn dev
 ```

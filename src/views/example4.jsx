@@ -67,6 +67,30 @@ function Example4() {
         var duration = 20;
         // 多个帧动画作为元素创建一个剪辑clip对象，命名"default"，持续时间20
         var clip = new THREE.AnimationClip("default", duration, [rotateTrack]);
+        let planeVertices1 = new Float32Array([
+            -100,0,0,
+            -100,0,100,
+            0,0,100,
+            0,0,100,
+            0,0,0,
+            -100,0,0,
+        ])
+        let planeGeo1 = new THREE.BufferGeometry()
+        planeGeo1.attributes.position = new THREE.BufferAttribute(planeVertices1, 3)
+        planeGeo1.attributes.normal = new THREE.BufferAttribute(new Float32Array([
+            0,1,0,
+            0,1,0,
+            0,1,0,
+            0,1,0,
+            0,1,0,
+            0,1,0,
+        ]), 3)
+        let planeMater1 = new THREE.MeshLambertMaterial({
+            color: 0x6600ff,
+            side: THREE.DoubleSide
+        })
+        let planeMesh1 = new THREE.Mesh(planeGeo1, planeMater1)
+        scene.add(planeMesh1)
 
         let planeVertices = new Float32Array([
             0,0,0,
@@ -93,12 +117,14 @@ function Example4() {
         let planeMesh = new THREE.Mesh(planeGeo, planeMater)
         
         planeMesh.name = "Plane"
-        let rotateKF = new THREE.KeyframeTrack('Plane.rotation[z]', [0, 20], [0, Math.PI * 2])
-        let planeClip = new THREE.AnimationClip("planeClip", 20, [rotateKF])
+        let rotateKF = new THREE.KeyframeTrack('Plane.rotation[z]', [0, 60], [0, Math.PI / 2])
+        let planeClip = new THREE.AnimationClip("planeClip", 60, [rotateKF])
         let planeMixer = new THREE.AnimationMixer(planeMesh)
         
         let action = planeMixer.clipAction(planeClip)
-        action.timeScale = 20
+        action.timeScale = 60
+        action.clampWhenFinished = true
+        action.loop = THREE.LoopOnce
         action.play()
 
         scene.add(planeMesh)
@@ -111,7 +137,7 @@ function Example4() {
         var AnimationAction = mixer.clipAction(clip);
         //通过操作Action设置播放方式
         AnimationAction.timeScale = 20;//默认1，可以调节播放速度
-        // AnimationAction.loop = THREE.LoopOnce; //不循环播放
+        AnimationAction.loop = THREE.LoopOnce; //不循环播放
         AnimationAction.play();//开始播放
 
 
