@@ -5,12 +5,14 @@ import Example1 from "./views/example1"
 import Example2 from "./views/example2"
 import Example3 from "./views/example3"
 import Example4 from "./views/example4"
+import Example5 from "./views/example5"
 function App() {
     const RouteConfig = {
         "/example1": <Example1/>,
         "/example2": <Example2/>,
         "/example3": <Example3/>,
         "/example4": <Example4/>,
+        "/example5": <Example5/>,
     }
     useEffect(() => {
         
