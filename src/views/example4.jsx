@@ -153,7 +153,6 @@ function Example4() {
             //clock.getDelta()方法获得两帧的时间间隔
             // 更新混合器相关的时间
             // mixer.update(clock.getDelta());
-
             planeMixer.update(clock.getDelta());
         }
         render();

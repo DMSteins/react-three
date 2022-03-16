@@ -15,24 +15,12 @@ function Example5() {
     }, []);
 
     const init = ()=>{
-        const info = document.createElement( 'div' );
-        info.style.position = 'absolute';
-        info.style.top = '30px';
-        info.style.width = '100%';
-        info.style.textAlign = 'center';
-        info.style.color = '#fff';
-        info.style.fontWeight = 'bold';
-        info.style.backgroundColor = 'transparent';
-        info.style.zIndex = '1';
-        info.style.fontFamily = 'Monospace';
-        info.innerHTML = "three.js animataed line using BufferGeometry";
-        document.body.appendChild( info );
 
         // renderer
         renderer = new THREE.WebGLRenderer();
         renderer.setPixelRatio( window.devicePixelRatio );
         renderer.setSize( window.innerWidth, window.innerHeight );
-        document.body.appendChild( renderer.domElement );
+        ExampleRef.current.appendChild( renderer.domElement );
 
         // scene
         scene = new THREE.Scene();
