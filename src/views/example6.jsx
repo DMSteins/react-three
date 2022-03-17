@@ -2,6 +2,7 @@ import { useState, useEffect, useRef } from 'react'
 import * as THREE from "three"
 import { transformSVGPath } from "../utils/svgTransform"
 import { OrbitControls } from "../utils/OrbitControls"
+import "../utils/QuaternionTransform"
 // svg转shapePath
 function Example6() {
     const ExampleRef = useRef(null)
@@ -105,9 +106,31 @@ function Example6() {
                 }
                 if(i === 1) continue
                 if(i < 4){
-                    mesh.rotateY(delta * Math.PI)
+                    let x = 50
+                    let axis = new THREE.Vector3(0,1,0)
+                    if(i == 2){
+                        x = 100
+                        axis.y = -1
+                    }else if(i == 3){
+                        x = 150
+                    }
+                    mesh.rotateAroundWorldAxis(new THREE.Vector3(x, 0,0), axis, delta * Math.PI)
+                    // mesh.rotateOnAxis(new THREE.Vector3(1,1,0), delta * Math.PI)
+                    // mesh.rotateY(delta * Math.PI)
                 }else{
-                    mesh.rotateX(delta * Math.PI)
+                    let axis = new THREE.Vector3(1,0,0)
+                    let point = new THREE.Vector3(0, 50,0)
+                    if(i == 4){
+                        
+                        mesh.rotateAroundWorldAxis(point, axis, delta * Math.PI)
+                    }else if(i == 5){
+                        axis.x = -1
+                        point.y = 0
+                        mesh.rotateAroundWorldAxis(point, axis, delta * Math.PI)
+                    }
+                    // mesh.rotateAroundWorldAxis(point, axis, delta * Math.PI)
+                    // mesh.rotateOnAxis(new THREE.Vector3(1,0,0), delta * Math.PI)
+                    // mesh.rotateX(delta * Math.PI)
                 }
                 
             }
