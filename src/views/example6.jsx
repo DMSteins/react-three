@@ -114,8 +114,11 @@ function Example6() {
                     }else if(i == 3){
                         x = 150
                     }
+                    // 以世界坐标系为基准
                     mesh.rotateAroundWorldAxis(new THREE.Vector3(x, 0,0), axis, delta * Math.PI)
+                    // 以自身坐标系为基准
                     // mesh.rotateOnAxis(new THREE.Vector3(1,1,0), delta * Math.PI)
+                    // 以自身坐标系为基准
                     // mesh.rotateY(delta * Math.PI)
                 }else{
                     let axis = new THREE.Vector3(1,0,0)
@@ -128,8 +131,11 @@ function Example6() {
                         point.y = 0
                         mesh.rotateAroundWorldAxis(point, axis, delta * Math.PI)
                     }
+                    // 以世界坐标系为基准
                     // mesh.rotateAroundWorldAxis(point, axis, delta * Math.PI)
+                    // 以自身坐标系为基准
                     // mesh.rotateOnAxis(new THREE.Vector3(1,0,0), delta * Math.PI)
+                    // 以自身坐标系为基准
                     // mesh.rotateX(delta * Math.PI)
                 }
                 
