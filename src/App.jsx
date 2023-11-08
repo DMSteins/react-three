@@ -8,6 +8,7 @@ import Example4 from "./views/example4"
 import Example5 from "./views/example5"
 import Example6 from "./views/example6"
 import Example7 from "./views/skeleton"
+import Models from "./views/models"
 function App() {
     const RouteConfig = {
         "/example1": <Example1/>,
@@ -17,6 +18,7 @@ function App() {
         "/example5": <Example5/>,
         "/example6": <Example6/>,
         "/example7": <Example7/>,
+        "models": <Models />
     }
     useEffect(() => {
         
